@@ -10,7 +10,18 @@ public class Car {
     private static final String TAG = "abrakadabra";
 
     private Engine engine;
-    private Wheels wheels;
+
+    // This is the same field injection but in case of MainActivity
+    // we had to add injector method into Component because we
+    // didn't create a MainActivity (Android) and we can't annotate
+    // it's constructor with @Inject. But Wheels class we created and
+    // annotated. That is why when Dagger starts building this Car object
+    // it first will call constructor, then fields and the methods. Even
+    // thought we are not adding Wheels thought the constructor we are
+    // doing it via fields. So remember we need let somehow know where
+    // we will inject our dependencies if we are not the owner of the class.
+    @Inject
+    Wheels wheels;
 
     // We passed Engine and Wheels as an constructor arguments.
     // This process is called Constructor Injection, where
@@ -22,12 +33,45 @@ public class Car {
     // Because Dagger will start building Car object but will not
     // find Engine and Wheels in Dependency graph.
     @Inject
-    public Car(Engine engine, Wheels wheels) {
+    public Car(Engine engine) {
         this.engine = engine;
-        this.wheels = wheels;
     }
 
     public void drive() {
         Log.d(TAG, "Driving...");
     }
+
+    // In general we have three places where we can put @Inject
+    // annotation: field, constructor and method. Method injection
+    // is something weird. Not that many people use it. But the idea
+    // is to use it when we need to call a method where we need a
+    // dependency. This is already bad design but if you have a
+    // situation where you need it don;t forget to annotate a method.
+    // And Dagger will call this method automatically. If you don't
+    // Dagger will not call this method. One fundamental difference
+    // about method injection that differs from the way you seem to be
+    // using it is that method injection is just another way for Dagger
+    // to send in dependencies when constructing or injecting a DI-ready
+    // object, which means that @Inject-annotated methods are meant to be
+    // called by Dagger once on construction and not from within your own code.
+    // This makes it very very unlikely that you would @Inject-annotate any other
+    // method that has meaningful side effects or return values. Instead, treat
+    // method injection as a post-facto opportunity for constructor-style injection.
+    @Inject
+    public void useRemote(Remote remote) {
+        remote.setRemoteOwnerCar();
+    }
+
+    // Just for a demonstration purposes a method which checks
+    // if the current Wheels is null or instantiated fully.
+    public boolean isWheelsNullWithinCarClass() {
+        if (wheels != null) {
+            Log.d(TAG, "Within Car class wheels are instantiated!");
+            return false;
+        } else {
+            Log.d(TAG, "NULL-NULL-NULL");
+            return true;
+        }
+    }
+
 }

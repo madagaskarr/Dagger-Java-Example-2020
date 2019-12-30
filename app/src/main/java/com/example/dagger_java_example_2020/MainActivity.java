@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         car = carComponent.getCar();
         car.drive();
+        car.isWheelsNullWithinCarClass();
         wheels.isWheelsNull();
+
 
     }
 }
