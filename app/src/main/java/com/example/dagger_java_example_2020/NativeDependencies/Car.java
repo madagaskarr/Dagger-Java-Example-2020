@@ -1,6 +1,8 @@
-package com.example.dagger_java_example_2020;
+package com.example.dagger_java_example_2020.NativeDependencies;
 
 import android.util.Log;
+
+import com.example.dagger_java_example_2020.ExternalDependencies.CustomizedEdition;
 
 import javax.inject.Inject;
 
@@ -22,6 +24,12 @@ public class Car {
     // we will inject our dependencies if we are not the owner of the class.
     @Inject
     Wheels wheels;
+
+    // This object is being injected through the module. This is external
+    // dependency and that is why we can't annotate it's constructor but
+    // instead we can create a provider odule and add that to the component.
+    @Inject
+    CustomizedEdition customizedEdition;
 
     // We passed Engine and Wheels as an constructor arguments.
     // This process is called Constructor Injection, where

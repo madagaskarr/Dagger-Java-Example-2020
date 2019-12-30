@@ -1,4 +1,4 @@
-package com.example.dagger_java_example_2020;
+package com.example.dagger_java_example_2020.NativeDependencies;
 
 import javax.inject.Inject;
 

@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.example.dagger_java_example_2020.Components.CarComponent;
 import com.example.dagger_java_example_2020.Components.DaggerCarComponent;
+import com.example.dagger_java_example_2020.NativeDependencies.Car;
+import com.example.dagger_java_example_2020.NativeDependencies.Wheels;
+import com.example.dagger_java_example_2020.R;
 
 import javax.inject.Inject;
 
