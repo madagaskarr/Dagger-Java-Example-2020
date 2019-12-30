@@ -7,7 +7,7 @@ import javax.inject.Inject;
 // We created a Car class that needs an Engine and Wheels,
 public class Car {
 
-    private static final String TAG = "Car";
+    private static final String TAG = "abrakadabra";
 
     private Engine engine;
     private Wheels wheels;

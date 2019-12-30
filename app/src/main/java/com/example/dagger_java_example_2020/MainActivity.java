@@ -13,6 +13,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Car car;
 
+    // For injecting into class we need to use the same
+    // @Inject annotation. This called field injection.
+    @Inject
+    Wheels wheels;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +27,14 @@ public class MainActivity extends AppCompatActivity {
         // of our component implementation class which will have all
         // getter methods.
         CarComponent carComponent = DaggerCarComponent.create();
+
+        // Calling this method we are telling Dagger that this is the class
+        // where we want inject all the dependencies in the component.
+        carComponent.inject(this);
+
         car = carComponent.getCar();
         car.drive();
+        wheels.isWheelsNull();
 
     }
 }
